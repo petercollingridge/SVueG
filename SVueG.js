@@ -17,6 +17,12 @@ Vue.component('control-point', {
     }
 });
 
+Vue.component('svg-line', {
+    props: ['p1', 'p2'],
+    template: '<line :x1="p1.x" :y1="p1.y" :x2="p2.x" :y2="p2.y"></line>',
+});
+
+
 function svueg(selector) {
     var data = {
         points: [],
@@ -32,7 +38,6 @@ function svueg(selector) {
                 if (this.selected) {
                     this.selected.position.x = evt.clientX + this.startX;
                     this.selected.position.y = evt.clientY + this.startY;
-                    
                 }
             },
             deselect: function() {
@@ -65,7 +70,11 @@ function svueg(selector) {
             attributes.draggable = false;
             data.points.push(attributes);
             return attributes;
-        }
+        },
+
+        addLine: function(p1, p2) {
+            data.lines.push({ p1: p1, p2: p2 });
+        },
     };
 }
 

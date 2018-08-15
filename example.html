@@ -11,6 +11,7 @@
     <div id="svueg-example">
         <svg class="svueg" v-on:mousemove="drag" v-on:mouseup="deselect"
             width="200px" height="200px" style="border:solid 1px black;">
+            <svg-line v-for="line in lines" :key="line.id" :p1="line.p1" :p2="line.p2"></svg-line>
             <control-point
                 v-for="point in points"
                 :key="point.id"
@@ -27,6 +28,8 @@
 
     var P1 = app.addPoint(50, 100);
     var P2 = app.addStaticPoint(150, 50);
+    app.addLine(P1, P2);
+    app.addLine(P1, {x: 20, y: 120});
 </script>
 
     </body>

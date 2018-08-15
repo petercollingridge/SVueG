@@ -6,3 +6,8 @@
 .svueg circle.draggable {
     fill: orange;
 }
+
+.svueg line {
+    stroke-width: 2px;
+    stroke: blue;
+}
