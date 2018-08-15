@@ -5,9 +5,13 @@ Vue.component('control-point', {
         select: function(evt) {
             if (this.draggable) {
                 this.$parent.selected = this;
-                this.$parent.startX = this.position.x - evt.clientX;
-                this.$parent.startY = this.position.y - evt.clientY;
+                this.startX = this.position.x - evt.clientX;
+                this.startY = this.position.y - evt.clientY;
             }
+        },
+        drag: function(dx, dy) {
+            this.position.x = this.startX + dx;
+            this.position.y = this.startY + dy;
         }
     },
     computed: {
@@ -18,8 +22,25 @@ Vue.component('control-point', {
 });
 
 Vue.component('svg-line', {
-    props: ['p1', 'p2'],
-    template: '<line :x1="p1.x" :y1="p1.y" :x2="p2.x" :y2="p2.y"></line>',
+    props: ['p1', 'p2', 'draggable'],
+    template: '<line :x1="p1.x" :y1="p1.y" :x2="p2.x" :y2="p2.y" v-on:mousedown="select" v-bind:class="{ draggable: draggable }"></line>',
+    methods: {
+        select: function(evt) {
+            if (this.draggable) {
+                this.$parent.selected = this;
+                this.startX1 = this.p1.x - evt.clientX;
+                this.startY1 = this.p1.y - evt.clientY;
+                this.startX2 = this.p2.x - evt.clientX;
+                this.startY2 = this.p2.y - evt.clientY;
+            }
+        },
+        drag: function(dx, dy) {
+            this.p1.x = this.startX1 + dx;
+            this.p1.y = this.startY1 + dy;
+            this.p2.x = this.startX2 + dx;
+            this.p2.y = this.startY2 + dy;
+        }
+    },
 });
 
 
@@ -36,8 +57,7 @@ function svueg(selector) {
         methods: {
             drag: function(evt) {
                 if (this.selected) {
-                    this.selected.position.x = evt.clientX + this.startX;
-                    this.selected.position.y = evt.clientY + this.startY;
+                    this.selected.drag(evt.clientX, evt.clientY);
                 }
             },
             deselect: function() {
@@ -74,6 +94,10 @@ function svueg(selector) {
 
         addLine: function(p1, p2) {
             data.lines.push({ p1: p1, p2: p2 });
+        },
+
+        addDraggableLine: function(p1, p2) {
+            data.lines.push({ p1: p1, p2: p2, draggable: true });
         },
     };
 }

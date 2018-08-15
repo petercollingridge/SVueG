@@ -11,3 +11,7 @@
     stroke-width: 2px;
     stroke: blue;
 }
+
+.svueg .draggable:hover {
+    cursor: move;
+}
