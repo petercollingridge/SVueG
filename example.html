@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Vue test</title>
+        <script src="https://unpkg.com/vue/dist/vue.js"></script>
+        <link href="SVueG.css" rel="stylesheet">
+    </head>
+    <body>
+
+    <div id="svueg-example">
+        <svg class="svueg" v-on:mousemove="drag" v-on:mouseup="deselect"
+            width="200px" height="200px" style="border:solid 1px black;">
+            <control-point
+                v-for="point in points"
+                :key="point.id"
+                :position="point"
+                :draggable="point.draggable">
+            </control-point>
+        </svg>
+    </div>
+
+<script src="SVueG.js"></script>
+
+<script type="text/javascript">
+    var app = svueg('#svueg-example');
+
+    var P1 = app.addPoint(50, 100);
+    var P2 = app.addStaticPoint(150, 50);
+</script>
+
+    </body>
+</html>

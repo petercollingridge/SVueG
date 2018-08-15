@@ -1,0 +1,8 @@
+.svueg circle {
+    fill: rgb(120, 120, 120);
+    stroke-width: 1px;
+    stroke: white;
+}
+.svueg circle.draggable {
+    fill: orange;
+}
