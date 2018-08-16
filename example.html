@@ -18,6 +18,13 @@
                 :p2="line.p2"
                 :draggable="line.draggable">
             </svg-line>
+            <svg-circle
+                v-for="circle in circles"
+                :key="circle.id"
+                :center="circle.center"
+                :radius-point="circle.radiusPoint"
+                :draggable="circle.draggable">
+            </svg-circle>
             <control-point
                 v-for="point in points"
                 :key="point.id"
@@ -34,8 +41,10 @@
 
     var P1 = app.addPoint(50, 100);
     var P2 = app.addStaticPoint(150, 50);
+    var P3 = app.addPoint(50, 50);
     app.addLine(P1, P2);
     app.addDraggableLine(P1, {x: 20, y: 120});
+    app.addCircle(P1, P3);
 </script>
 
     </body>

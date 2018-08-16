@@ -1,6 +1,6 @@
 Vue.component('control-point', {
     props: ['position', 'draggable'],
-    template: '<circle :cx="position.x" :cy="position.y" v-on:mousedown="select" :r="radius" v-bind:class="{ draggable: draggable }"></circle>',
+    template: '<circle :cx="position.x" :cy="position.y" v-on:mousedown="select" :r="radius" v-bind:class="{ draggable: draggable }"/>',
     methods: {
         select: function(evt) {
             if (this.draggable) {
@@ -23,7 +23,7 @@ Vue.component('control-point', {
 
 Vue.component('svg-line', {
     props: ['p1', 'p2', 'draggable'],
-    template: '<line :x1="p1.x" :y1="p1.y" :x2="p2.x" :y2="p2.y" v-on:mousedown="select" v-bind:class="{ draggable: draggable }"></line>',
+    template: '<line :x1="p1.x" :y1="p1.y" :x2="p2.x" :y2="p2.y" v-on:mousedown="select" class="line" v-bind:class="{ draggable: draggable }"/>',
     methods: {
         select: function(evt) {
             if (this.draggable) {
@@ -43,11 +43,25 @@ Vue.component('svg-line', {
     },
 });
 
+Vue.component('svg-circle', {
+    props: ['center', 'radiusPoint', 'draggable'],
+    template: '<circle :cx="center.x" :cy="center.y" :r="radius" class="line" v-bind:class="{ draggable: draggable }"/>',
+    methods: {
+    },
+    computed: {
+        radius: function() {
+            var dx = this.center.x - this.radiusPoint.x;
+            var dy = this.center.y - this.radiusPoint.y;
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+    }
+});
 
 function svueg(selector) {
     var data = {
         points: [],
         lines: [],
+        circles: [],
         selected: false,
     };
 
@@ -98,6 +112,10 @@ function svueg(selector) {
 
         addDraggableLine: function(p1, p2) {
             data.lines.push({ p1: p1, p2: p2, draggable: true });
+        },
+
+        addCircle: function(center, radiusPoint) {
+            data.circles.push({ center: center, radiusPoint: radiusPoint });
         },
     };
 }

@@ -7,9 +7,10 @@
     fill: orange;
 }
 
-.svueg line {
+.svueg .line {
     stroke-width: 2px;
     stroke: blue;
+    fill: none;
 }
 
 .svueg .draggable:hover {
